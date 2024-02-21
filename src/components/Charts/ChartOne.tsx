@@ -1,58 +1,29 @@
 import { ApexOptions } from 'apexcharts';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 
 const options: ApexOptions = {
   legend: {
     show: false,
-    position: 'top',
-    horizontalAlign: 'left',
   },
-  colors: ['#3C50E0', '#80CAEE'],
+  colors: ['#FF5733', '#33FF57'], // Adjust colors for real-time monitoring
   chart: {
     fontFamily: 'Satoshi, sans-serif',
     height: 335,
-    type: 'area',
-    dropShadow: {
-      enabled: true,
-      color: '#623CEA14',
-      top: 10,
-      blur: 4,
-      left: 0,
-      opacity: 0.1,
-    },
-
+    type: 'line', // Change to line chart for real-time monitoring
     toolbar: {
       show: false,
     },
   },
-  responsive: [
-    {
-      breakpoint: 1024,
-      options: {
-        chart: {
-          height: 300,
-        },
-      },
-    },
-    {
-      breakpoint: 1366,
-      options: {
-        chart: {
-          height: 350,
-        },
-      },
-    },
-  ],
   stroke: {
-    width: [2, 2],
-    curve: 'straight',
+    width: [3, 3],
+    curve: 'smooth',
   },
-  // labels: {
-  //   show: false,
-  //   position: "top",
-  // },
   grid: {
+    show: true,
+    borderColor: '#f0f0f0',
+    strokeDashArray: 3,
+    position: 'back',
     xaxis: {
       lines: {
         show: true,
@@ -68,40 +39,13 @@ const options: ApexOptions = {
     enabled: false,
   },
   markers: {
-    size: 4,
-    colors: '#fff',
-    strokeColors: ['#3056D3', '#80CAEE'],
-    strokeWidth: 3,
-    strokeOpacity: 0.9,
-    strokeDashArray: 0,
-    fillOpacity: 1,
-    discrete: [],
-    hover: {
-      size: undefined,
-      sizeOffset: 5,
-    },
+    size: 0,
   },
   xaxis: {
     type: 'category',
-    categories: [
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-    ],
-    axisBorder: {
-      show: false,
-    },
-    axisTicks: {
-      show: false,
+    categories: [], // Real-time data categories
+    labels: {
+      show: true,
     },
   },
   yaxis: {
@@ -115,46 +59,92 @@ const options: ApexOptions = {
   },
 };
 
-interface ChartOneState {
-  series: {
-    name: string;
-    data: number[];
-  }[];
-}
+const generateRandomData = () => {
+  const data = [];
+  for (let i = 0; i < 12; i++) {
+    data.push(Math.floor(Math.random() * 100)); // Generate random data between 0 and 100
+  }
+  return data;
+};
 
 const ChartOne: React.FC = () => {
-  const [state, setState] = useState<ChartOneState>({
-    series: [
+  const [timeframe, setTimeframe] = useState<'daily' | 'weekly'>('daily');
+  const [seriesData, setSeriesData] = useState({
+    daily: [
       {
-        name: 'Product One',
-        data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30, 45],
+        name: 'Power Factor',
+        data: generateRandomData(), // Random data for power factor
       },
-
       {
-        name: 'Product Two',
-        data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 51],
+        name: 'Harmonics',
+        data: generateRandomData(), // Random data for harmonics
+      },
+    ],
+    weekly: [
+      {
+        name: 'Power Factor',
+        data: generateRandomData(), // Random data for power factor
+      },
+      {
+        name: 'Harmonics',
+        data: generateRandomData(), // Random data for harmonics
       },
     ],
   });
 
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-    }));
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (timeframe === 'daily') {
+        setSeriesData(prevState => ({
+          ...prevState,
+          daily: [
+            {
+              name: 'Power Factor',
+              data: generateRandomData(),
+            },
+            {
+              name: 'Harmonics',
+              data: generateRandomData(),
+            },
+          ],
+        }));
+      } else if (timeframe === 'weekly') {
+        setSeriesData(prevState => ({
+          ...prevState,
+          weekly: [
+            {
+              name: 'Power Factor',
+              data: generateRandomData(),
+            },
+            {
+              name: 'Harmonics',
+              data: generateRandomData(),
+            },
+          ],
+        }));
+      }
+    }, 7000); // Update data every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [timeframe]);
+
+  const handleTimeframeChange = (newTimeframe: 'daily' | 'weekly') => {
+    setTimeframe(newTimeframe);
   };
-  handleReset;
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
+      {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
+        {/* Metrics */}
         <div className="flex w-full flex-wrap gap-3 sm:gap-5">
           <div className="flex min-w-47.5">
             <span className="mt-1 mr-2 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-primary">
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-primary">Total Revenue</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <p className="font-semibold text-primary">Power Factor</p>
+              <p className="text-sm font-medium">Real-time Power Factor</p>
             </div>
           </div>
           <div className="flex min-w-47.5">
@@ -162,32 +152,41 @@ const ChartOne: React.FC = () => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-secondary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-secondary">Total Sales</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <p className="font-semibold text-secondary">Harmonics</p>
+              <p className="text-sm font-medium">Real-time Harmonics</p>
             </div>
           </div>
         </div>
+        {/* Timeframe Selector */}
         <div className="flex w-full max-w-45 justify-end">
           <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
-            <button className="rounded bg-white py-1 px-3 text-xs font-medium text-black shadow-card hover:bg-white hover:shadow-card dark:bg-boxdark dark:text-white dark:hover:bg-boxdark">
-              Day
+            <button
+              className={`rounded py-1 px-3 text-xs font-medium text-black ${
+                timeframe === 'daily' ? 'bg-white shadow-card' : ''
+              }`}
+              onClick={() => handleTimeframeChange('daily')}
+            >
+              Daily
             </button>
-            <button className="rounded py-1 px-3 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark">
-              Week
-            </button>
-            <button className="rounded py-1 px-3 text-xs font-medium text-black hover:bg-white hover:shadow-card dark:text-white dark:hover:bg-boxdark">
-              Month
+            <button
+              className={`rounded py-1 px-3 text-xs font-medium text-black ${
+                timeframe === 'weekly' ? 'bg-white shadow-card' : ''
+              }`}
+              onClick={() => handleTimeframeChange('weekly')}
+            >
+              Weekly
             </button>
           </div>
         </div>
       </div>
 
+      {/* Chart */}
       <div>
         <div id="chartOne" className="-ml-5">
           <ReactApexChart
             options={options}
-            series={state.series}
-            type="area"
+            series={timeframe === 'daily' ? seriesData.daily : seriesData.weekly}
+            type="line"
             height={350}
           />
         </div>

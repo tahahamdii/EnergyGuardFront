@@ -52,7 +52,6 @@ const options: ApexOptions = {
     fontFamily: 'Satoshi',
     fontWeight: 500,
     fontSize: '14px',
-
     markers: {
       radius: 99,
     },
@@ -73,11 +72,11 @@ const ChartTwo: React.FC = () => {
   const [state, setState] = useState<ChartTwoState>({
     series: [
       {
-        name: 'Sales',
+        name: 'Alarm and Event Tracking', // Change label
         data: [44, 55, 41, 67, 22, 43, 65],
       },
       {
-        name: 'Revenue',
+        name: 'Integration with production management', // Change label
         data: [13, 23, 20, 8, 13, 27, 15],
       },
     ],
