@@ -19,7 +19,7 @@ import Buttons from './pages/UiElements/Buttons';
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
-
+  const token = localStorage.getItem('token');
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -33,7 +33,30 @@ function App() {
   ) : (
     <>
       <Routes>
+        {token==null?(
+          <>
+          <Route
+          index
+          element={
+            <>
+              <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <SignIn />
+            </>
+          }
+        />
         <Route
+          path="/auth/signup"
+          element={
+            <>
+              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <SignUp />
+            </>
+          }
+        />
+          </>
+        ):(
+          <>
+          <Route
           index
           element={
             <>
@@ -141,6 +164,10 @@ function App() {
             </>
           }
         />
+          </>
+        )
+      
+      }
       </Routes>
     </>
   );

@@ -1,36 +1,41 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 import axios from 'axios';
 
 const SignUp: React.FC = () => {
-
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
+  const [role, setRole] = useState<string>('Operator');
+  const[responseData,setData]=useState("");
+  const navigate=useNavigate();
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/auth/signUp', {
-        username,
-        email,
-        password,
-        confirmPassword
-      }, {
-        headers: {
+      const response=await fetch('http://localhost:5000/auth/signUp',{
+        method:'POST',
+        headers:{
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin':'true'
-
-          //'Authorization': 'Bearer yourAccessTokenHere' // Add your authorization token here
-        }
+        },
+        body:JSON.stringify({username,email,password,confirmPassword,role})
       });
-      console.log('Signup successful:', response.data);
-      console.log(response);
+      if(response.ok){
+        console.log("Post request successful");
+        const responseData=await response.json();
+        setData(responseData);
+        localStorage.setItem('token',responseData.token)
+        localStorage.setItem('username',username);
+        localStorage.setItem('email',email);
+        navigate("/");
+      }else{
+        console.log("post failed");
+      }
     } catch (error) {
-      console.error('Signup error:');
+      console.error('Signup error:'+error);
     }
     
   };
