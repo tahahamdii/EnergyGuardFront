@@ -15,6 +15,10 @@ import Settings from './pages/Settings';
 import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
+import ListMachines from './pages/Machines/ListMachines';
+import AddMachine from './pages/Machines/AddMachine';
+import Edit from '@mui/icons-material/Edit';
+import EditMachine from './pages/Machines/EditMachine';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -71,6 +75,33 @@ function App() {
             <>
               <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <Calendar />
+            </>
+          }
+        />
+        <Route
+          path="/machines/listMachines"
+          element={
+            <>
+              <PageTitle title="List Machines" />
+              <ListMachines />
+            </>
+          }
+        />
+         <Route
+          path="/machines/addMachine"
+          element={
+            <>
+              <PageTitle title="Add Machine" />
+              <AddMachine />
+            </>
+          }
+        />
+           <Route
+          path="/machines/editMachine"
+          element={
+            <>
+              <PageTitle title="Edit Machine" />
+              <EditMachine />
             </>
           }
         />

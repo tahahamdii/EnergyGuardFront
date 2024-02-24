@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
-import axios from 'axios';
 
 const SignUp: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -30,7 +29,7 @@ const SignUp: React.FC = () => {
         localStorage.setItem('token',responseData.token)
         localStorage.setItem('username',username);
         localStorage.setItem('email',email);
-        navigate("/");
+        navigate("/auth/login");
       }else{
         console.log("post failed");
       }
