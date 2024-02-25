@@ -19,6 +19,7 @@ import ListMachines from './pages/Machines/ListMachines';
 import AddMachine from './pages/Machines/AddMachine';
 import Edit from '@mui/icons-material/Edit';
 import EditMachine from './pages/Machines/EditMachine';
+import ListUser from './pages/Users/ListUser';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -102,6 +103,15 @@ function App() {
             <>
               <PageTitle title="Edit Machine" />
               <EditMachine />
+            </>
+          }
+        />
+         <Route
+          path="/users"
+          element={
+            <>
+              <PageTitle title="List Users" />
+              <ListUser />
             </>
           }
         />
