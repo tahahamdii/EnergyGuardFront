@@ -13,24 +13,36 @@ const initialState: ActivityState = {
   userActivities: [], 
 };
 const currentDate = new Date();
+const saveUserActivitiesToLocalStorage = (activities: any[]) => {
+  localStorage.setItem("userActivities", JSON.stringify(activities));
+};
+const getCurrentTimestamp = (): string => {
+  const currentDate = new Date();
+  const timezoneOffset = currentDate.getTimezoneOffset();
+  const localTimestamp = new Date(currentDate.getTime() - timezoneOffset * 60000);
+  return localTimestamp.toISOString().replace("Z", "+00:00");
+};
 const ActivitySlice = createSlice({
   name: "counter",
   initialState,
   reducers: {
-    logLogin: (state) => {
+    logLogin: (state,action:PayloadAction<{username:String}>) => {
         state.userActivities.push({
-          timestamp: currentDate.toISOString().replace('Z', '+00:00'),
+          timestamp: getCurrentTimestamp(),
           activityType: 'Login',
-          details: 'User logged in',
+          details: action.payload.username+' logged in',
         });
+        saveUserActivitiesToLocalStorage([...state.userActivities]);
       },
       logLogout: (state) => {
         state.userActivities.push({
-          timestamp: currentDate.toISOString().replace('Z', '+00:00'),
+          timestamp: getCurrentTimestamp(),
           activityType: 'Logout',
           details: 'User logged out',
         });
+        saveUserActivitiesToLocalStorage([...state.userActivities]);
       },
+
       setUserActivities: (state, action: PayloadAction<any[]>) => {
         state.userActivities = action.payload;
       },

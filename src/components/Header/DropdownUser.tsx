@@ -13,18 +13,22 @@
       const username = localStorage.getItem('username');
       const userActivities = useSelector((state: RootState) => state.Activity.userActivities);
       
-      
-      const saveUserActivitiesToLocalStorage = (activities: any[]) => {
-        localStorage.setItem('userActivities', JSON.stringify(activities));
+      const getCurrentTimestamp = (): string => {
+        const currentDate = new Date();
+        const timezoneOffset = currentDate.getTimezoneOffset();
+        const localTimestamp = new Date(currentDate.getTime() - timezoneOffset * 60000);
+        return localTimestamp.toISOString().replace("Z", "+00:00");
       };
+     
+
       const logout = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
           dispatch(logLogout()); 
           const newActivity = {
-            timestamp: new Date().toISOString().replace('Z', '+00:00'),
+            timestamp: getCurrentTimestamp(),
             activityType: 'Logout',
-            details: 'User logged out',
+            details: username+' logged out',
           };
           const updatedUserActivities = [...userActivities, newActivity];
           dispatch(setUserActivities(updatedUserActivities));
