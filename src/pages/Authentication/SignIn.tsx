@@ -6,12 +6,21 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PasswordIcon from '@mui/icons-material/Password';
 import EmailIcon from '@mui/icons-material/Email';
 import backgroundImage from '../../images/logo/sinup.jpg';
+import { useDispatch,useSelector } from 'react-redux';
+import { AppDispatch,RootState } from '../../state/store';
+import { logLogin } from '../../state/Activity/ActivitySlice';
 
 const SignIn: React.FC = () => {
   const[email,setEmail]=useState('');
   const[password,setPassword]=useState('');
   const navigate=useNavigate();
   const[responseData,setData]=useState("");
+  const dispatch = useDispatch<AppDispatch>();
+
+  const CreateActivity = (username:String) => {
+    dispatch(logLogin({username}));  
+  };
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -29,6 +38,8 @@ const SignIn: React.FC = () => {
         setData(responseData);
         localStorage.setItem('token',responseData.token);
         localStorage.setItem('email',email);
+        localStorage.setItem('username',responseData.username)
+        CreateActivity(responseData.username);
         navigate("/");
       }else{
         console.log("post failed");
