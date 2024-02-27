@@ -67,7 +67,7 @@ const ListUser = () => {
                                         Role
                                     </th>
                                     <th className="py-4 px-4 font-medium text-black dark:text-white">
-                                        Verify ?
+                                         Actions
                                     </th>
                                 </tr>
                             </thead>
@@ -100,13 +100,7 @@ const ListUser = () => {
                                                     {user.isVerified}
                                                 </p>
                                             </td>
-                                            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                                <div className="flex items-center space-x-3.5">
-                                                    <button className="hover:text-primary">
-                                                        <DeleteIcon className="text-red-500" />
-                                                    </button>
-                                                </div>
-                                            </td>
+                                            
                                         </tr>
                                     ))
                                 ) : (
