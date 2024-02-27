@@ -2,12 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../../public/logonew.png';
-
+import { useDispatch,useSelector } from 'react-redux';
+import { AppDispatch,RootState } from '../../state/store';
+import { logLogin } from '../../state/Activity/ActivitySlice';
 const SignIn: React.FC = () => {
   const[email,setEmail]=useState('');
   const[password,setPassword]=useState('');
   const navigate=useNavigate();
   const[responseData,setData]=useState("");
+  //log activity
+  const dispatch = useDispatch<AppDispatch>();
+  const userActivities = useSelector((state: RootState) => state.Activity.userActivities);
+  const CreateActivity = () => {
+    dispatch(logLogin());
+    const newActivity = {
+      timestamp: new Date().toISOString().replace('Z', '+00:00'),
+      activityType: "Login",
+      details: "User logged in",
+    };
+    saveUserActivitiesToLocalStorage([...userActivities, newActivity]);
+  };
+  const saveUserActivitiesToLocalStorage = (activities: any[]) => {
+    localStorage.setItem("userActivities", JSON.stringify(activities));
+  };
+  //log activity
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -20,11 +38,13 @@ const SignIn: React.FC = () => {
         body:JSON.stringify({email,password})
       });
       if(response.ok){
+        CreateActivity();
         console.log("Post request successful");
         const responseData=await response.json();
         setData(responseData);
         localStorage.setItem('token',responseData.token);
         localStorage.setItem('email',email);
+        localStorage.setItem('username',responseData.username)
         navigate("/");
       }else{
         console.log("post failed");
