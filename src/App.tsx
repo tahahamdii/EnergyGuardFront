@@ -20,6 +20,7 @@ import AddMachine from './pages/Machines/AddMachine';
 import Edit from '@mui/icons-material/Edit';
 import EditMachine from './pages/Machines/EditMachine';
 import ListUser from './pages/Users/ListUser';
+import NotifEvent from './Events/NotifEvent';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -85,6 +86,15 @@ function App() {
             <>
               <PageTitle title="List Machines" />
               <ListMachines />
+            </>
+          }
+        />
+        <Route
+          path="/notif"
+          element={
+            <>
+              <PageTitle title="Notif" />
+              <NotifEvent />
             </>
           }
         />

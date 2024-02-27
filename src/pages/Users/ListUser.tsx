@@ -11,6 +11,7 @@ interface User {
     email: string;
     password: string ; 
     role: 'Administrator' | 'Energy Manager' | 'Operator'; 
+    isVerified:boolean;
 }
 
 
@@ -66,7 +67,7 @@ const ListUser = () => {
                                         Role
                                     </th>
                                     <th className="py-4 px-4 font-medium text-black dark:text-white">
-                                        Status
+                                        Verify ?
                                     </th>
                                 </tr>
                             </thead>
@@ -92,6 +93,11 @@ const ListUser = () => {
                                             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                                 <p className="text-black dark:text-white">
                                                     {user.role}
+                                                </p>
+                                            </td>
+                                            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                                <p className="text-black dark:text-white">
+                                                    {user.isVerified}
                                                 </p>
                                             </td>
                                             <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">

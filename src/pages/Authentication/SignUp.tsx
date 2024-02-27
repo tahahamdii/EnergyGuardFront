@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import LogoDark from '../../images/logo/logo-dark.svg';
-import Logo from '../../images/logo/logo.svg';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PasswordIcon from '@mui/icons-material/Password';
 import EmailIcon from '@mui/icons-material/Email';
+import backgroundImage from '../../images/logo/sinup.jpg';
 
 const SignUp: React.FC = () => {
+  const { token } = useParams(); // Capture verification token from URL
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState<string>('Operator');
   const [responseData, setData] = useState("");
-  const navigate = useNavigate();
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,26 +40,58 @@ const SignUp: React.FC = () => {
     } catch (error) {
       console.error('Signup error:' + error);
     }
-
   };
+
+  useEffect(() => {
+    if (token) {
+      const verifyEmail = async () => {
+        try {
+          const response = await fetch(`http://localhost:5000/auth/verify/${token}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          });
+          if (response.ok) {
+            console.log('Email verified successfully');
+            navigate("/auth/signin");
+          } else {
+            console.log('Email verification failed');
+          }
+        } catch (error) {
+
+          console.error('Email verification error:', error);
+          // Handle error
+        }
+      };
+
+      verifyEmail();
+    }
+  }, [token]);
+
   return (
     <div className="rounded-sm border border-black bg-boxdark shadow-default dark:border-strokedark">
       <div className="flex flex-wrap items-center">
 
-        <div className="hidden w-full xl:block xl:w-1/2" style={{ backgroundImage: "url('../../images/logo/sinup.jpg)" }}>
+
+        <div className="hidden w-full xl:block xl:w-1/2 bg-cover bg-center" style={{ backgroundImage: `url(${backgroundImage})`, width: '100', height: '735px' }}>
           <div className="py-17.5 px-26 text-center">
-            <Link className="mb-5.5 inline-block" to="/"></Link>
-            <p className="2xl:px-20">Hello To ENRGY GUARD</p>
+            <Link className="mb-5.5 inline-block" to="/">
+            </Link>
+            <p className="2xl:px-20"></p>
           </div>
         </div>
 
 
-        <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
+
+        <div className="w-full border-none dark:border-strokedark xl:w-1/2 xl:border-l-2">
           <div className="w-full p-4 sm:p-12.5 xl:p-10">
             <span className="mb-1.5 block font-medium"></span>
             <h2 className="mb-9 text-2xl font-bold text-white dark:text-white sm:text-title-xl2">
               Sign Up
             </h2>
+
+
 
             <form onSubmit={handleSignUp}>
               <div className="mb-4 relative">
