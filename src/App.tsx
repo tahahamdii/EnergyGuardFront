@@ -20,6 +20,8 @@ import Edit from '@mui/icons-material/Edit';
 import EditMachine from './pages/Machines/EditMachine';
 import ListUser from './pages/Users/ListUser';
 import NotifEvent from './Events/NotifEvent';
+import { List } from '@mui/material';
+import ListSensor from './pages/Sensors/ListSensor';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -112,6 +114,15 @@ function App() {
             <>
               <PageTitle title="Edit Machine" />
               <EditMachine />
+            </>
+          }
+        />
+        <Route
+          path="/sensors/listSensor"
+          element={
+            <>
+              <PageTitle title="List Sensors" />
+              <ListSensor />
             </>
           }
         />
