@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 interface Sensor {
     _id: string;
@@ -39,18 +42,41 @@ const ListSensor = () => {
                     throw new Error('Failed to fetch data');
                 }
                 const responseData = await response.json();
-       // Corrected property name to responseData.sensors
+                // Corrected property name to responseData.sensors
                 console.log(responseData);
-setData(responseData.sensor);
+                setData(responseData);
 
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-        
-            fetchData();
-        }, [refreshTable]);
 
+        fetchData();
+    }, [refreshTable]);
+
+
+    const handleDelete = async (id: string) => {
+        try {
+            const response = await fetch(`http://localhost:5000/sensor/deleteSensor/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': 'true',
+                },
+            });
+            if (!response.ok) {
+                throw new Error('Failed to delete sensor');
+            } else {
+                setRefreshTable(prev => !prev);
+            }
+        } catch (error) {
+            console.error('Delete error:', error);
+        }
+    };
+
+    const handleEdit = (sensorId: string) => {
+        navigate(`/sensor/updateSensor?machineId=${sensorId}`);
+    };
     return (
         <DefaultLayout>
             <Breadcrumb pageName="List Sensors" />
@@ -76,10 +102,13 @@ setData(responseData.sensor);
                                     <th className="py-4 px-4 font-medium text-black dark:text-white">
                                         Temperature
                                     </th>
+                                    <th className="py-4 px-4 font-medium text-black dark:text-white">
+                                        Actions
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {data && data.length > 0 ? ( // Add a null check for data
+                                {data && data.length > 0 ? (
                                     data.map((sensor, index) => (
                                         <tr key={index}>
                                             <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
@@ -107,6 +136,16 @@ setData(responseData.sensor);
                                                     {sensor.thermalParameters.temperature}
                                                 </p>
                                             </td>
+                                            <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                            <div className="flex items-center space-x-3.5">
+                                                <button className="hover:text-primary" onClick={() => handleEdit(sensor._id)}>
+                                                    <EditIcon className='text-yellow-400' />
+                                                </button>
+                                                <button className="hover:text-primary" onClick={() => handleDelete(sensor._id)}>
+                                                    <DeleteIcon className="text-red-500" />
+                                                </button>
+                                            </div>
+                                        </td>
                                         </tr>
                                     ))
                                 ) : (
@@ -116,6 +155,8 @@ setData(responseData.sensor);
                                         </td>
                                     </tr>
                                 )}
+
+
                             </tbody>
                         </table>
                     </div>

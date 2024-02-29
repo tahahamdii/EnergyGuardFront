@@ -40,7 +40,7 @@ const AddMachine = () => {
                 console.log("post failed");
             }
         } catch (error) {
-            console.error('Signup error:' + error);
+            console.error('Post error:' + error);
         }
     };
 

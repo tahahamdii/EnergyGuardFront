@@ -1,121 +1,145 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Button, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Button, TextField } from '@mui/material';
+import DefaultLayout from '../../layout/DefaultLayout';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 
-interface MachineData {
+export interface Machine {
     _id: string;
     machineName: string;
-    description: string;
     location: string;
     installationDate: string;
     maintenanceDate: string;
 }
 
 const EditMachine = () => {
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const machineId = searchParams.get('machineId');
-    const [machineData, setMachineData] = useState<MachineData | null>(null);
+    const navigate = useNavigate();
+    const { machineId } = useParams();
+    const [machine, setMachine] = useState<Machine | null>(null);
 
     useEffect(() => {
-        const fetchMachineData = async () => {
-            try {
-                const response = await fetch(`http://localhost:5000/machine/getMachineByID/${machineId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': 'true',
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch machine data');
-                } else {
-                    const data: MachineData = await response.json();
-                    setMachineData(data);
-                    console.log(data);
-                }
-            } catch (error) {
-                console.error('Fetch machine data error:', error);
-            }
-        };
-
         if (machineId) {
-            fetchMachineData();
+            fetchMachine();
         }
     }, [machineId]);
 
-    const handleUpdate = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const fetchMachine = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/machine/updateMachine/${machineId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': 'true',
-                },
-                body: JSON.stringify(machineData),
-            });
+            const response = await fetch(`http://localhost:5000/machine/getMachineByID/${machineId}`);
             if (!response.ok) {
-                throw new Error('Failed to update machine');
-            } else {
-                // Handle success, maybe show a success message
+                throw new Error('Failed to fetch machine details');
             }
+            const machineData = await response.json();
+            const formattedMachineData: Machine = {
+                ...machineData,
+                installationDate: machineData.installationDate ? new Date(machineData.installationDate).toISOString().split('T')[0] : '',
+                maintenanceDate: machineData.maintenanceDate ? new Date(machineData.maintenanceDate).toISOString().split('T')[0] : ''
+            };
+            setMachine(formattedMachineData);
         } catch (error) {
-            console.error('Update error:', error);
+            console.error('Error fetching machine details:', error);
         }
     };
 
-    if (!machineData) {
-        return <div>Loading...</div>;
-    }
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            if (!machine) {
+                console.error('Machine data not available');
+                return;
+            }
+            const response = await fetch(`http://localhost:5000/machine/updateMachine/${machine._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(machine),
+            });
+            if (!response.ok) {
+                throw new Error('Failed to update machine');
+            }
+            navigate(`/machines/listMachines`); // Redirect after successful update
+        } catch (error) {
+            console.error('Error updating machine:', error);
+        }
+    };
 
     return (
-        <div>
-            <h2>Edit Machine</h2>
-            <form onSubmit={handleUpdate}>
-                <TextField
-                    label="Machine Name"
-                    value={machineData?.machineName || ''}
-                    onChange={(e) => setMachineData({ ...machineData!, machineName: e.target.value })}
-                    fullWidth
-                />
-                <TextField
-                    label="Description"
-                    value={machineData?.description || ''}
-                    onChange={(e) => setMachineData({ ...machineData!, description: e.target.value })}
-                    fullWidth
-                />
-                <TextField
-                    label="Location"
-                    value={machineData?.location || ''}
-                    onChange={(e) => setMachineData({ ...machineData!, location: e.target.value })}
-                    fullWidth
-                />
-                <TextField
-                    label="Installation Date"
-                    type="date"
-                    value={machineData?.installationDate || ''}
-                    onChange={(e) => setMachineData({ ...machineData!, installationDate: e.target.value })}
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
-                <TextField
-                    label="Maintenance Date"
-                    type="date"
-                    value={machineData?.maintenanceDate || ''}
-                    onChange={(e) => setMachineData({ ...machineData!, maintenanceDate: e.target.value })}
-                    fullWidth
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
-                <Button type="submit" variant="contained" color="primary">
-                    Update
-                </Button>
-            </form>
-        </div>
+        <DefaultLayout>
+            <div className="flex flex-col justify-center items-center h-full">
+                <div className="rounded-sm border border-stroke bg-white px-10 pt-15 pb-20 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-4" style={{ marginBottom: '20px' }}>
+                    <Box
+                        component="form"
+                        onSubmit={handleSubmit}
+                        sx={{
+                            '& .MuiTextField-root': { m: 1, width: '50ch' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                    >
+                        <TextField
+                            required
+                            id="machineName"
+                            label="Machine Name"
+                            value={machine?.machineName || ''}
+                            onChange={(e) => setMachine(prevMachine => ({
+                                ...prevMachine!,
+                                machineName: e.target.value
+                            }))}
+                            variant="outlined"
+                        />
+                        <TextField
+                            required
+                            id="location"
+                            label="Location"
+                            value={machine?.location || ''}
+                            onChange={(e) => setMachine(prevMachine => ({
+                                ...prevMachine!,
+                                location: e.target.value
+                            }))}
+                            variant="outlined"
+                        />
+                        <TextField
+                            required
+                            id="installationDate"
+                            label="Installation Date"
+                            type="date"
+                            value={machine?.installationDate || ''}
+                            onChange={(e) => setMachine(prevMachine => ({
+                                ...prevMachine!,
+                                installationDate: e.target.value
+                            }))}
+                            variant="outlined"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                        <TextField
+                            required
+                            id="maintenanceDate"
+                            label="Maintenance Date"
+                            type="date"
+                            value={machine?.maintenanceDate || ''}
+                            onChange={(e) => setMachine(prevMachine => ({
+                                ...prevMachine!,
+                                maintenanceDate: e.target.value
+                            }))}
+                            variant="outlined"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            style={{ backgroundColor: '#3366cc', color: 'white', marginTop: '20px' }}
+                        >
+                            Update Machine
+                        </Button>
+                    </Box>
+                </div>
+            </div>
+        </DefaultLayout>
     );
 };
 

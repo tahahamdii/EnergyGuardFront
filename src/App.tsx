@@ -19,9 +19,9 @@ import AddMachine from './pages/Machines/AddMachine';
 import Edit from '@mui/icons-material/Edit';
 import EditMachine from './pages/Machines/EditMachine';
 import ListUser from './pages/Users/ListUser';
-import NotifEvent from './Events/NotifEvent';
 import { List } from '@mui/material';
 import ListSensor from './pages/Sensors/ListSensor';
+import AddSensor from './pages/Sensors/AddSensor';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -90,15 +90,7 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/notif"
-          element={
-            <>
-              <PageTitle title="Notif" />
-              <NotifEvent />
-            </>
-          }
-        />
+       
          <Route
           path="/machines/addMachine"
           element={
@@ -108,21 +100,28 @@ function App() {
             </>
           }
         />
-           <Route
-          path="/machines/editMachine"
-          element={
-            <>
-              <PageTitle title="Edit Machine" />
-              <EditMachine />
-            </>
-          }
-        />
+          
+        <Route>
+        <Route path="/machines/editMachine/:machineId" 
+        element={
+          <EditMachine />
+          } />
+        </Route>
         <Route
           path="/sensors/listSensor"
           element={
             <>
               <PageTitle title="List Sensors" />
               <ListSensor />
+            </>
+          }
+        />
+         <Route
+          path="/sensors/addSensor"
+          element={
+            <>
+              <PageTitle title="Add Sensors" />
+              <AddSensor />
             </>
           }
         />

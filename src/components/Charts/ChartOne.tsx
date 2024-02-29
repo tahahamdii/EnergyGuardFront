@@ -123,7 +123,7 @@ const ChartOne: React.FC = () => {
           ],
         }));
       }
-    }, 7000); // Update data every 5 seconds
+    }, 2000); // Update data every 2 seconds
 
     return () => clearInterval(interval);
   }, [timeframe]);

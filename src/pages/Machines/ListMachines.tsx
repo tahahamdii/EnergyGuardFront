@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
@@ -31,7 +31,6 @@ const ListMachines = () => {
                     throw new Error('something is wrong');
                 } else {
                     const responseData = await response.json();
-                    console.log(responseData);
                     setData(responseData);
                 }
             } catch (error) {
@@ -61,7 +60,7 @@ const ListMachines = () => {
     };
 
     const handleEdit = (machineId: string) => {
-        navigate(`/machines/editMachine?machineId=${machineId}`);
+        navigate(`/machines/editMachine/${machineId}`);
     };
 
     return (
