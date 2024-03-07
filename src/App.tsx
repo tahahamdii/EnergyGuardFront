@@ -22,6 +22,9 @@ import ListUser from './pages/Users/ListUser';
 import { List } from '@mui/material';
 import ListSensor from './pages/Sensors/ListSensor';
 import AddSensor from './pages/Sensors/AddSensor';
+import ListUsines from './pages/Usines/ListUsine';
+import AddUsine from './pages/Usines/AddUsine';
+import EditUsine from './pages/Usines/EditUsine';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -131,6 +134,33 @@ function App() {
             <>
               <PageTitle title="List Users" />
               <ListUser />
+            </>
+          }
+        />
+         <Route
+          path="/usines/listUsines"
+          element={
+            <>
+              <PageTitle title="List Usines" />
+              <ListUsines />
+            </>
+          }
+        />
+        <Route
+          path="/usines/addUsine"
+          element={
+            <>
+              <PageTitle title="Add Usines" />
+              <AddUsine/>
+            </>
+          }
+        />
+            <Route
+          path="/usines/editUsine/:usineId"
+          element={
+            <>
+              <PageTitle title="Edit Usines" />
+              <EditUsine/>
             </>
           }
         />
