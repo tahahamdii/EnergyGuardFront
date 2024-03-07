@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, TextField, Checkbox, FormControlLabel } from '@mui/material';
 import DefaultLayout from '../../layout/DefaultLayout';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 
 export interface Usine {
     _id: string;
@@ -59,6 +60,8 @@ const EditUsine = () => {
 
     return (
         <DefaultLayout>
+            <Breadcrumb pageName="Edit Usine" />
+
             <div className="flex flex-col justify-center items-center h-full">
                 <div className="rounded-sm border border-stroke bg-white px-10 pt-15 pb-20 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-4" style={{ marginBottom: '20px' }}>
                     <Box

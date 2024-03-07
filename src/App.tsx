@@ -16,15 +16,18 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import ListMachines from './pages/Machines/ListMachines';
 import AddMachine from './pages/Machines/AddMachine';
-import Edit from '@mui/icons-material/Edit';
 import EditMachine from './pages/Machines/EditMachine';
 import ListUser from './pages/Users/ListUser';
-import { List } from '@mui/material';
 import ListSensor from './pages/Sensors/ListSensor';
 import AddSensor from './pages/Sensors/AddSensor';
 import ListUsines from './pages/Usines/ListUsine';
 import AddUsine from './pages/Usines/AddUsine';
 import EditUsine from './pages/Usines/EditUsine';
+import 'react-toastify/dist/ReactToastify.css'; // Import the CSS file for react-toastify
+import ListZones from './pages/Zones/ListZone';
+import AddZone from './pages/Zones/AddZone';
+import EditZone from './pages/Zones/EditZone';
+
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -161,6 +164,33 @@ function App() {
             <>
               <PageTitle title="Edit Usines" />
               <EditUsine/>
+            </>
+          }
+        />
+         <Route
+          path="/zones/listZones"
+          element={
+            <>
+              <PageTitle title="List Zone" />
+              <ListZones />
+            </>
+          }
+        />
+        <Route
+          path="/zones/addZone"
+          element={
+            <>
+              <PageTitle title="Add Zone" />
+              <AddZone/>
+            </>
+          }
+        />
+            <Route
+          path="/zones/editZone/:zoneId"
+          element={
+            <>
+              <PageTitle title="Edit Zones" />
+              <EditZone/>
             </>
           }
         />
