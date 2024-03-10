@@ -27,6 +27,8 @@ import 'react-toastify/dist/ReactToastify.css'; // Import the CSS file for react
 import ListZones from './pages/Zones/ListZone';
 import AddZone from './pages/Zones/AddZone';
 import EditZone from './pages/Zones/EditZone';
+import ListTgbt from './pages/tgbt/ListTgbt';
+import AddTgbt from './pages/tgbt/AddTgbt';
 
 
 function App() {
@@ -194,6 +196,26 @@ function App() {
             </>
           }
         />
+        
+        <Route
+          path="/tgbt/listTgbt"
+          element={
+            <>
+              <PageTitle title="List TGBT" />
+              <ListTgbt />
+            </>
+          }
+        />
+        <Route
+          path="/tgbt/addTgbt"
+          element={
+            <>
+              <PageTitle title="Add TGBT" />
+              <AddTgbt />
+            </>
+          }
+        />
+          
         <Route
           path="/profile"
           element={

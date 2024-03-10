@@ -121,7 +121,7 @@ const EditZone = () => {
                                     onChange={(e) => setZone(prevZone => ({
                                         ...prevZone!,
                                         isprod: e.target.checked
-                                    }))}
+                                    }))}    
                                     color="primary"
                                 />
                             }
