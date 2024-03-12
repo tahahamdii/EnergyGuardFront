@@ -29,6 +29,8 @@ import AddZone from './pages/Zones/AddZone';
 import EditZone from './pages/Zones/EditZone';
 import ListTgbt from './pages/tgbt/ListTgbt';
 import AddTgbt from './pages/tgbt/AddTgbt';
+import ListSaison from './pages/Saison/ListSaison';
+import AddSaison from './pages/Saison/AddSaison';
 
 
 function App() {
@@ -196,7 +198,25 @@ function App() {
             </>
           }
         />
+            <Route
+          path="/saison/listSaison"
+          element={
+            <>
+              <PageTitle title="List Saison" />
+              <ListSaison />
+            </>
+          }
+        />
         
+        <Route
+          path="/saison/addSaison"
+          element={
+            <>
+              <PageTitle title="Add Saison" />
+              <AddSaison />
+            </>
+          }
+        />
         <Route
           path="/tgbt/listTgbt"
           element={
