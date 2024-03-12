@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, TextField } from '@mui/material';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
-import { TextFieldProps } from '@mui/material/TextField';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import DefaultLayout from '../../layout/DefaultLayout';
 
 export interface Saison {
@@ -92,22 +90,7 @@ const EditSaison = () => {
                             variant="outlined"
                         />
 
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker
-                                id="datedebut"
-                                label="Start Date"
-                                value={saison?.datedebut || null}
-                                onChange={(newDate: Date | null) => setSaison((prevSaison) => ({ ...prevSaison!, datedebut: newDate }))}
-                                renderInput={(params: TextFieldProps) => <TextField {...params} variant="outlined" />}
-                            />
-                            <DatePicker
-                                id="datefin"
-                                label="End Date"
-                                value={saison?.datefin || null}
-                                onChange={(newDate: Date | null) => setSaison((prevSaison) => ({ ...prevSaison!, datefin: newDate }))}
-                                renderInput={(params: TextFieldProps) => <TextField {...params} variant="outlined" />}
-                            />
-                        </LocalizationProvider>
+
 
                         <TextField
                             id="mois"
@@ -116,6 +99,27 @@ const EditSaison = () => {
                             onChange={(e) => setSaison((prevSaison) => ({ ...prevSaison!, mois: e.target.value }))}
                             variant="outlined"
                         />
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                            <div style={{ width: '200px', backgroundColor: '#f0f0f0', border: '1px solid #ccc', borderRadius: '4px', marginLeft: '7px' }}>
+                                <span>date debut</span>
+                                <DatePicker
+                                
+                                    selected={saison?.datedebut || null}
+                                    onChange={(newDate) => setSaison((prevSaison) => ({ ...prevSaison!, datedebut: newDate }))}
+                                    dateFormat="yyyy-MM-dd"
+                                />
+                            </div>
+
+                            <div style={{ width: '200px', backgroundColor: '#f0f0f0', border: '1px solid #ccc', borderRadius: '4px', marginLeft: '7px' }}>
+                            <span>date fin</span>
+                                <DatePicker
+                                    selected={saison?.datefin || null}
+                                    onChange={(newDate) => setSaison((prevSaison) => ({ ...prevSaison!, datefin: newDate }))}
+                                    dateFormat="yyyy-MM-dd"
+                                />
+                            </div>
+                        </div>
+
 
                         <Button
                             type="submit"
