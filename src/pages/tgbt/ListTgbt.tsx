@@ -82,7 +82,7 @@ const ListTgbt = () => {
                 },
             });
             if (!response.ok) {
-                throw new Error('Failed to delete zone');
+                throw new Error('Failed to delete tgbt');
             } else {
                 setRefreshTable(prev => !prev);
             }
@@ -92,7 +92,7 @@ const ListTgbt = () => {
     };
 
     const handleEdit = (tgbtId: string) => {
-        navigate(`/thbt/updateTGBT/${tgbtId}`);
+        navigate(`/tgbt/updateTGBT/${tgbtId}`);
     };
 
     return (
