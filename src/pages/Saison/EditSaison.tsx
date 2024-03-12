@@ -1,73 +1,79 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, TextField } from '@mui/material';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
+import { TextFieldProps } from '@mui/material/TextField';
 import DefaultLayout from '../../layout/DefaultLayout';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 
-export interface Machine {
+export interface Saison {
     _id: string;
-    machineName: string;
-    location: string;
-    installationDate: string;
-    maintenanceDate: string;
+    nom_saison: string;
+    datedebut: Date | null;
+    datefin: Date | null;
+    mois: string;
 }
 
 const EditSaison = () => {
     const navigate = useNavigate();
-    const { machineId } = useParams();
-    const [machine, setMachine] = useState<Machine | null>(null);
+    const { saisonId } = useParams();
+    const [saison, setSaison] = useState<Saison | null>(null);
 
     useEffect(() => {
-        if (machineId) {
-            fetchMachine();
+        if (saisonId) {
+            fetchSaison();
         }
-    }, [machineId]);
+    }, [saisonId]);
 
-    const fetchMachine = async () => {
+    const fetchSaison = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/machine/getMachineByID/${machineId}`);
+            const response = await fetch(`http://localhost:5000/saison/getSaisonByID/${saisonId}`);
             if (!response.ok) {
-                throw new Error('Failed to fetch machine details');
+                throw new Error('Failed to fetch saison details');
             }
-            const machineData = await response.json();
-            const formattedMachineData: Machine = {
-                ...machineData,
-                installationDate: machineData.installationDate ? new Date(machineData.installationDate).toISOString().split('T')[0] : '',
-                maintenanceDate: machineData.maintenanceDate ? new Date(machineData.maintenanceDate).toISOString().split('T')[0] : ''
+            const saisonData = await response.json();
+            const formattedSaisonData: Saison = {
+                ...saisonData,
+                datedebut: saisonData.datedebut ? new Date(saisonData.datedebut) : null,
+                datefin: saisonData.datefin ? new Date(saisonData.datefin) : null,
             };
-            setMachine(formattedMachineData);
+            setSaison(formattedSaisonData);
         } catch (error) {
-            console.error('Error fetching machine details:', error);
+            console.error('Error fetching saison details:', error);
         }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            if (!machine) {
-                console.error('Machine data not available');
+            if (!saison) {
+                console.error('Saison data not available');
                 return;
             }
-            const response = await fetch(`http://localhost:5000/machine/updateMachine/${machine._id}`, {
+            const response = await fetch(`http://localhost:5000/saison/updateSaison/${saison._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(machine),
+                body: JSON.stringify(saison),
             });
             if (!response.ok) {
-                throw new Error('Failed to update machine');
+                throw new Error('Failed to update saison');
             }
-            navigate(`/machines/listMachines`); // Redirect after successful update
+            navigate(`/saison/listSaison`);
         } catch (error) {
-            console.error('Error updating machine:', error);
+            console.error('Error updating saison:', error);
         }
     };
 
     return (
         <DefaultLayout>
             <div className="flex flex-col justify-center items-center h-full">
-                <div className="rounded-sm border border-stroke bg-white px-10 pt-15 pb-20 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-4" style={{ marginBottom: '20px' }}>
+                <div
+                    className="rounded-sm border border-stroke bg-white px-10 pt-15 pb-20 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-4"
+                    style={{ marginBottom: '20px' }}
+                >
                     <Box
                         component="form"
                         onSubmit={handleSubmit}
@@ -79,62 +85,44 @@ const EditSaison = () => {
                     >
                         <TextField
                             required
-                            id="machineName"
-                            label="Machine Name"
-                            value={machine?.machineName || ''}
-                            onChange={(e) => setMachine(prevMachine => ({
-                                ...prevMachine!,
-                                machineName: e.target.value
-                            }))}
+                            id="saisonName"
+                            label="Saison Name"
+                            value={saison?.nom_saison || ''}
+                            onChange={(e) => setSaison((prevSaison) => ({ ...prevSaison!, nom_saison: e.target.value }))}
                             variant="outlined"
                         />
+
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+                                id="datedebut"
+                                label="Start Date"
+                                value={saison?.datedebut || null}
+                                onChange={(newDate: Date | null) => setSaison((prevSaison) => ({ ...prevSaison!, datedebut: newDate }))}
+                                renderInput={(params: TextFieldProps) => <TextField {...params} variant="outlined" />}
+                            />
+                            <DatePicker
+                                id="datefin"
+                                label="End Date"
+                                value={saison?.datefin || null}
+                                onChange={(newDate: Date | null) => setSaison((prevSaison) => ({ ...prevSaison!, datefin: newDate }))}
+                                renderInput={(params: TextFieldProps) => <TextField {...params} variant="outlined" />}
+                            />
+                        </LocalizationProvider>
+
                         <TextField
-                            required
-                            id="location"
-                            label="Location"
-                            value={machine?.location || ''}
-                            onChange={(e) => setMachine(prevMachine => ({
-                                ...prevMachine!,
-                                location: e.target.value
-                            }))}
+                            id="mois"
+                            label="Month"
+                            value={saison?.mois || ''}
+                            onChange={(e) => setSaison((prevSaison) => ({ ...prevSaison!, mois: e.target.value }))}
                             variant="outlined"
                         />
-                        <TextField
-                            required
-                            id="installationDate"
-                            label="Installation Date"
-                            type="date"
-                            value={machine?.installationDate || ''}
-                            onChange={(e) => setMachine(prevMachine => ({
-                                ...prevMachine!,
-                                installationDate: e.target.value
-                            }))}
-                            variant="outlined"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                        <TextField
-                            required
-                            id="maintenanceDate"
-                            label="Maintenance Date"
-                            type="date"
-                            value={machine?.maintenanceDate || ''}
-                            onChange={(e) => setMachine(prevMachine => ({
-                                ...prevMachine!,
-                                maintenanceDate: e.target.value
-                            }))}
-                            variant="outlined"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
+
                         <Button
                             type="submit"
                             variant="contained"
                             style={{ backgroundColor: '#3366cc', color: 'white', marginTop: '20px' }}
                         >
-                            Update Machine
+                            Update Saison
                         </Button>
                     </Box>
                 </div>

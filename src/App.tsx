@@ -31,6 +31,7 @@ import ListTgbt from './pages/tgbt/ListTgbt';
 import AddTgbt from './pages/tgbt/AddTgbt';
 import ListSaison from './pages/Saison/ListSaison';
 import AddSaison from './pages/Saison/AddSaison';
+import EditSaison from './pages/Saison/EditSaison';
 
 
 function App() {
@@ -214,6 +215,15 @@ function App() {
             <>
               <PageTitle title="Add Saison" />
               <AddSaison />
+            </>
+          }
+        />
+          <Route
+          path="/saison/updateSaison/:saisonId"
+          element={
+            <>
+              <PageTitle title="Edit Saison" />
+              <EditSaison />
             </>
           }
         />
