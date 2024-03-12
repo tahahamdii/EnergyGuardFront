@@ -3,7 +3,6 @@ import { Box, Checkbox, Button, FormControlLabel, TextField, MenuItem, Select, I
 import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddTgbt = () => {
@@ -13,7 +12,7 @@ const AddTgbt = () => {
     const [puissancemax, setPuissancemax] = useState('');
     const [dossier, setDossier] = useState('');
     const [seuil, setSeuil] = useState('');
-    const [puissance_souscrite, setPuissanceSouscrite] = useState('');
+        const [puissance_souscrite, setPuissanceSouscrite] = useState('');
     const [isactive, setIsactive] = useState('');
     const [adressip, setAdressip] = useState('');
     const [interfaceweb, setInterfaceweb] = useState(false);
@@ -58,6 +57,7 @@ const AddTgbt = () => {
                     nom,
                     puissancemax,
                     dossier,
+                    seuil,
                     puissance_souscrite,
                     isactive,
                     adressip,
@@ -94,23 +94,28 @@ const AddTgbt = () => {
     const handleDossierChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDossier(e.target.value);
     };
-    
+
     const handlePuissancemaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPuissancemax(e.target.value);
     };
-    
+
     const handleSeuilChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSeuil(e.target.value);
     };
-    
+    const handlePuissanceSouscriteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPuissanceSouscrite(e.target.value);
+    };
     const handleIsactiveChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsactive(e.target.value);
     };
-    
+
     const handleAdressipChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAdressip(e.target.value);
     };
-    
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInterfaceweb(e.target.checked);
+    };
+
     return (
         <DefaultLayout>
             <Breadcrumb pageName="Add Zone" />
@@ -152,7 +157,7 @@ const AddTgbt = () => {
                                 variant="outlined"
                                 sx={{ marginBottom: '10px' }}
                                 onChange={handleDossierChange}
-                                type="text" 
+                                type="text"
                             />
 
                             <TextField
@@ -163,7 +168,7 @@ const AddTgbt = () => {
                                 variant="outlined"
                                 sx={{ marginBottom: '10px' }}
                                 onChange={handlePuissancemaxChange}
-                                type="number" 
+                                type="number"
                             />
 
                             <TextField
@@ -174,9 +179,19 @@ const AddTgbt = () => {
                                 variant="outlined"
                                 sx={{ marginBottom: '10px' }}
                                 onChange={handleSeuilChange}
-                                type="number" 
+                                type="number"
                             />
 
+                            <TextField
+                                required
+                                id="puissance_souscrite"
+                                label="puissance_souscrite"
+                                value={puissance_souscrite}
+                                variant="outlined"
+                                sx={{ marginBottom: '10px' }}
+                                onChange={handlePuissanceSouscriteChange}
+                                type="number"
+                            />
                             <TextField
                                 required
                                 id="isactive"
@@ -185,7 +200,7 @@ const AddTgbt = () => {
                                 variant="outlined"
                                 sx={{ marginBottom: '10px' }}
                                 onChange={handleIsactiveChange}
-                                type="text" 
+                                type="text"
                             />
 
                             <TextField
@@ -196,7 +211,7 @@ const AddTgbt = () => {
                                 variant="outlined"
                                 sx={{ marginBottom: '10px' }}
                                 onChange={handleAdressipChange}
-                                type="text" 
+                                type="text"
                             />
 
                             <InputLabel id="usine-select-label">Select Usine</InputLabel>
@@ -221,14 +236,15 @@ const AddTgbt = () => {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                        checked={interfaceweb}
-                                        onChange={(e) => setInterfaceweb(e.target.checked)}
-                                        color="primary"
-                                    />
+                                    checked={interfaceweb}
+                                    onChange={handleCheckboxChange}
+                                    color="primary"
+                                />
                                 }
                                 label="Interfaceweb"
                                 sx={{ marginBottom: '10px' }}
                             />
+                            
 
                         </div>
                         <Button

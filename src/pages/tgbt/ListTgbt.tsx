@@ -37,7 +37,7 @@ const ListTgbt = () => {
                         'Access-Control-Allow-Origin': 'true',
                     },
                 });
-                
+
                 if (!tgbtResponse.ok) {
                     throw new Error('Failed to fetch tgbt');
                 } else {
@@ -104,17 +104,27 @@ const ListTgbt = () => {
                         <table className="w-full table-auto">
                             <thead>
                                 <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                                    <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
-                                        TGBT ID
-                                    </th>
+
                                     <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
                                         TGBT Name
+                                    </th>
+                                    <th className="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
+                                        TGBT Dossier
                                     </th>
                                     <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                                         Puissance Max
                                     </th>
                                     <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                                        Seuil
+                                    </th>
+                                    <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                                        Puissance Souscrite
+                                    </th>
+                                    <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
                                         Usine Name
+                                    </th>
+                                    <th className="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">
+                                        Interfaceweb
                                     </th>
                                     <th className="py-4 px-4 font-medium text-black dark:text-white">
                                         Actions
@@ -124,22 +134,35 @@ const ListTgbt = () => {
                             <tbody>
                                 {data.map((tgbt, index) => (
                                     <tr key={index}>
-                                        <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-                                            <h5 className="font-medium text-black dark:text-white">
-                                                {tgbt._id}
-                                            </h5>
-                                        </td>
+
                                         <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                            <p className="text-black dark:text-white">{tgbt.nom}</p>
+                                            <h5 className="font-medium text-black dark:text-white">
+                                                {tgbt.nom}
+                                            </h5>                                        </td>
+                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                            <p className="text-black dark:text-white">{tgbt.dossier}</p>
                                         </td>
                                         <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                             <p className="text-black dark:text-white">
-                                                {tgbt.puissancemax ? 'Yes' : 'No'}
+                                                {tgbt.puissancemax }
+                                            </p>
+                                        </td>
+
+
+                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                            <p className="text-black dark:text-white">{tgbt.seuil}</p>
+                                        </td>
+                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                            <p className="text-black dark:text-white">{tgbt.puissance_souscrite}</p>
+                                        </td>
+                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                            <p className="text-black dark:text-white">
+                                                {tgbt.interfaceweb ? 'Yes' : 'No'}
                                             </p>
                                         </td>
                                         <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                             <p className="text-black dark:text-white">
-                                            {usineData[tgbt.usineID]}
+                                                {usineData[tgbt.usineID]}
                                             </p>
                                         </td>
                                         <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
