@@ -6,7 +6,7 @@ const options: ApexOptions = {
   legend: {
     show: false,
   },
-  colors: ['#FF5733', '#33FF57'], // Adjust colors for real-time monitoring
+  colors: ['#3C50E0', '#33FF57'], // Adjust colors for real-time monitoring
   chart: {
     fontFamily: 'Satoshi, sans-serif',
     height: 335,

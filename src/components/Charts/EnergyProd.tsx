@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import axios from 'axios';
+import moment from 'moment';
 
 interface EnergyProdData {
   date: Date;
@@ -11,7 +12,43 @@ interface EnergyProdData {
   // Add other properties as needed
 }
 
-const EnergyProdChart: React.FC = () => {
+const prepareHighchartsOptions = (data: EnergyProdData[]) => {
+  // Format your data as needed for Highcharts
+  const formattedData = data.map(entry => ({
+    name: moment(entry.date).format('YYYY-MM-DD'), // Format date as 'YYYY-MM-DD'
+    y: entry.energie,
+    color: 'blue',
+  }));
+
+  return {
+    chart: {
+      type: 'line',
+      accessibility: {
+        enabled: false,
+      },
+    },
+    title: {
+      text: 'Energy Consumption Over Time',
+    },
+    xAxis: {
+      type: 'datetime',
+      title: {
+        text: 'Date',
+      },
+    },
+    yAxis: {
+      title: {
+        text: 'Energie',
+      },
+    },
+    series: [{
+      name: 'Energy Consumption',
+      data: formattedData,
+    }] as Highcharts.SeriesOptionsType[],
+  };
+};
+
+const EnergyProd: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [chartData, setChartData] = useState<EnergyProdData[]>([]);
@@ -28,53 +65,16 @@ const EnergyProdChart: React.FC = () => {
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, []); // Empty dependency array to trigger the effect only on mount
 
-  const prepareHighchartsOptions = (data: EnergyProdData[]) => {
-    const seriesData = data.map(entry => ({
-      name: entry.date?.toString() ?? 'Unknown',
-      data: [entry.energie, entry.poids, entry.duree],
-    }));
-
-    return {
-      chart: {
-        type: 'column',
-        accessibility: {
-          enabled: false, // Set to true if you want accessibility features
-        },
-      },
-      title: {
-        text: 'Energy Production Chart',
-      },
-      xAxis: {
-        categories: data.map(entry => entry.date.toString()),
-        title: {
-          text: 'Date',
-        },
-      },
-      yAxis: [
-        {
-          title: {
-            text: 'Energie',
-          },
-        },
-        {
-          title: {
-            text: 'Poids',
-          },
-          opposite: true,
-        },
-        {
-          title: {
-            text: 'Duree',
-          },
-          opposite: true,
-        },
-      ],
-      series: seriesData,
-      // Additional Highcharts options...
-    };
-  };
+  // Use another useEffect to handle chart initialization after data is fetched
+  useEffect(() => {
+    if (!loading && chartData.length > 0) {
+      // Initialize the chart when data is fetched and component has rendered
+      const options = prepareHighchartsOptions(chartData);
+      //Highcharts.chart('your-chart-container-id', options);
+    }
+  }, [loading, chartData]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -89,10 +89,11 @@ const EnergyProdChart: React.FC = () => {
       <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
         {/* Additional content for the card */}
         <h5 className="text-xl font-semibold text-black dark:text-white mb-3">
-          Energy Production Overview
+          Energy Consumption Over Time
         </h5>
         {/* You can add more content here based on your design */}
-        <div className="mb-2">
+        <div className="mb-2" id="your-chart-container-id">
+          {/* Chart container */}
           <HighchartsReact highcharts={Highcharts} options={prepareHighchartsOptions(chartData)} />
         </div>
         {/* Additional content for the card */}
@@ -101,4 +102,4 @@ const EnergyProdChart: React.FC = () => {
   );
 };
 
-export default EnergyProdChart;
+export default EnergyProd;

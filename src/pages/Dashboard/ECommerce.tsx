@@ -7,7 +7,7 @@ import MapOne from '../../components/Maps/MapOne';
 import TableOne from '../../components/Tables/TableOne';
 import DefaultLayout from '../../layout/DefaultLayout';
 import ChartEnergyProd from '../../components/Charts/ChartEnergyProd';
-import EnergyProdChart from '../../components/Charts/EnergyProd';
+import EnergyConsumptionChart from '../../components/Charts/EnergyProd';
 
 const ECommerce: React.FC = () => {
   return (
@@ -19,7 +19,7 @@ const ECommerce: React.FC = () => {
         <ChartTwo />
         <ChartEnergyProd />
         <ChartThree />
-        <EnergyProdChart />
+        <EnergyConsumptionChart />
         <MapOne />
         <div className="col-span-12 xl:col-span-8">
           <TableOne />
