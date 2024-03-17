@@ -11,6 +11,7 @@ import EnergyConsumptionChart from '../../components/Charts/EnergyProd';
 import CardDataStats from '../../components/CardDataStats';
 import TotalConsom from '../../components/Cards/TotalConsom'; 
 import ConsomGlo from '../../components/Cards/ConsomGlo'; 
+import AverageCosphi from '../../components/Cards/AverageCosphi';
 
 const ECommerce: React.FC = () => {
   return (
@@ -25,7 +26,7 @@ const ECommerce: React.FC = () => {
          
         />
         <TotalConsom />
-           
+        <AverageCosphi />
         <ConsomGlo
           title="Total views"
           total="$3.456K"
