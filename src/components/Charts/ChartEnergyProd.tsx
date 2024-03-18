@@ -1,10 +1,10 @@
 import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import HighchartsExporting from 'highcharts/modules/exporting'; // Import the exporting module
-import HighchartsExportData from 'highcharts/modules/export-data'; // Import the export-data module
+import HighchartsExporting from 'highcharts/modules/exporting'; 
+import HighchartsExportData from 'highcharts/modules/export-data'; 
 
-// Initialize the exporting module
+
 HighchartsExporting(Highcharts);
 HighchartsExportData(Highcharts);
 const highchartsOptions: Highcharts.Options = {
