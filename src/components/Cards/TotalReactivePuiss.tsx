@@ -3,7 +3,7 @@ import ConsomGlo from './ConsomGlo';
 import FlashOnIcon from '@mui/icons-material/FlashOn'; // Import the FlashOnIcon
 
 const TotalReactivePuiss = () => {
-    const [overallTotalReactiveConsumption, setOverallTotalReactiveConsumption] = useState<number | null>(null);
+    const [overallTotalReactiveEnergy, setOverallTotalReactiveEnergy] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,7 +21,8 @@ const TotalReactivePuiss = () => {
                 } else {
                     const responseData = await response.json();
                     console.log(responseData); 
-                    setOverallTotalReactiveConsumption(responseData.overallTotalReactiveConsumption);
+                    setOverallTotalReactiveEnergy(responseData.overallTotalReactiveEnergy);
+                    console.log(responseData.overallTotalReactiveEnergy);
                 }
             } catch (error) {
                 console.log(error);
@@ -35,8 +36,7 @@ const TotalReactivePuiss = () => {
         <div>
             <ConsomGlo
                 title="Total Reactive Energy Consumption"
-             
-                total={`${overallTotalReactiveConsumption ?? 'Loading...'} kWh`}          
+                total={`${overallTotalReactiveEnergy ?? 'Loading...'} kWh`}          
                 rate=""
                 levelUp
                 icon={<FlashOnIcon  className="text-blue-500 mr-3"/>} 
