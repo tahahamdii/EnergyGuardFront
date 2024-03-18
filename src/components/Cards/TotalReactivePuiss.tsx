@@ -39,7 +39,7 @@ const TotalReactivePuiss = () => {
                 total={`${overallTotalReactiveConsumption ?? 'Loading...'} kWh`}          
                 rate=""
                 levelUp
-                icon={<FlashOnIcon />} 
+                icon={<FlashOnIcon  className="text-blue-500 mr-3"/>} 
             />
         </div>
     );

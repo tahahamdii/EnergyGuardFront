@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 
@@ -31,7 +31,8 @@ const ConsomPerUsine = () => {
     const options: ApexOptions = {
         chart: {
             fontFamily: 'Satoshi, sans-serif',
-            type: 'pie', // Change type to 'pie' for a pie chart
+            type: 'pie', 
+           
         },
         colors: ['#3C50E0', '#6577F3', '#8FD0EF'],
         labels: ['Usine 1', 'Usine 2', 'Usine 3'],
@@ -41,7 +42,7 @@ const ConsomPerUsine = () => {
         },
         plotOptions: {
             pie: {
-                customScale: 0.8, // Custom scale for highlighting pie slices
+                customScale: 1,
             },
         },
         dataLabels: {
