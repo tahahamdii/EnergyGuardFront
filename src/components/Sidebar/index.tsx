@@ -13,6 +13,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
 import FactoryIcon from '@mui/icons-material/Factory';
+import BilanEnergy from '../Bilan/BilanEnergy';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -130,9 +131,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   <EditCalendarIcon />
                   Calendar
                 </NavLink>
-
-
-
+              </li>
+              <li>
+                <NavLink
+                  to="/bilan"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('calendar') &&
+                    'bg-graydark dark:bg-meta-4'
+                    }`}
+                >
+                  <EditCalendarIcon />
+                  Bilan
+                </NavLink>
               </li>
               <li>
                 <NavLink
@@ -583,6 +592,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
 
          
+           
               <li>
                 <NavLink
                   to="/settings"
