@@ -10,8 +10,9 @@ import ChartEnergyProd from '../../components/Charts/ChartEnergyProd';
 import EnergyConsumptionChart from '../../components/Charts/EnergyProd';
 import CardDataStats from '../../components/CardDataStats';
 import TotalConsom from '../../components/Cards/TotalConsom'; 
-import ConsomGlo from '../../components/Cards/ConsomGlo'; 
 import AverageCosphi from '../../components/Cards/AverageCosphi';
+import TotalReactivePuiss from '../../components/Cards/TotalReactivePuiss';
+import ConsomPerUsine from '../../components/Charts/ConsomPerUsine';
 
 const ECommerce: React.FC = () => {
   return (
@@ -27,18 +28,13 @@ const ECommerce: React.FC = () => {
         />
         <TotalConsom />
         <AverageCosphi />
-        <ConsomGlo
-          title="Total views"
-          total="$3.456K"
-          rate="0.43%"
-          levelUp
-          icon
-
-        />
+        <TotalReactivePuiss />
+       
       </div>
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne />
         <ChartTwo />
+        <ConsomPerUsine />
         <ChartEnergyProd />
         <ChartThree />
         <EnergyConsumptionChart />

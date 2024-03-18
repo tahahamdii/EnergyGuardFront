@@ -33,6 +33,7 @@ import ListSaison from './pages/Saison/ListSaison';
 import AddSaison from './pages/Saison/AddSaison';
 import EditSaison from './pages/Saison/EditSaison';
 import EditTgbt from './pages/tgbt/EditTgbt';
+import BilanEnergy from './components/Bilan/BilanEnergy';
 
 
 function App() {
@@ -280,6 +281,16 @@ function App() {
             <>
               <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
               <FormLayout />
+            </>
+          }
+        />
+          <Route
+          path="/bilan"
+          element={
+            <>
+                          <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+
+              <BilanEnergy />
             </>
           }
         />

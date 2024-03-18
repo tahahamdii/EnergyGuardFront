@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import ConsomGlo from './ConsomGlo';
-import FlashOnIcon from '@mui/icons-material/FlashOn'; // Import the FlashOnIcon
+import FlashOnIcon from '@mui/icons-material/FlashOn'; 
 
 const TotalConsom = () => {
     const [overallTotalConsumption, setOverallTotalConsumption] = useState<number | null>(null);
@@ -30,19 +29,6 @@ const TotalConsom = () => {
         fetchData();
     }, []);
 
-    // Custom icon for total energy consumption card
-    const totalEnergyIcon = (
-      <svg
-        className="fill-custom-color" // Add your custom class for styling
-        width="10"
-        height="11"
-        viewBox="0 0 10 11"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* Add your custom SVG path here */}
-      </svg>
-    );
 
     return (
         <div>
@@ -52,7 +38,7 @@ const TotalConsom = () => {
               total={`${overallTotalConsumption ?? 'Loading...'} kWh`}
               rate=""
               levelUp
-              icon={<FlashOnIcon />} 
+              icon={<FlashOnIcon  className="text-yellow-500 mr-3"/>} 
             />
         </div>
     );
