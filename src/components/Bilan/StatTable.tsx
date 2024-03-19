@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
 interface Statistics {
-    averageCosphi: number;
-    totalEnergie: number;
-    totalCost: number;
+    averageCosphi: string; // Change data type to string
+    totalEnergie: number | null;
+    totalCost: number | null;
 }
+
 
 const StatTable = () => {
     const [statistics, setStatistics] = useState<Statistics | null>(null);
 
     useEffect(() => {
-        console.log("Fetching data...");
+
         const fetchData = async () => {
             try {
                 const apiurl = 'http://localhost:5000/bilan/getStat';
@@ -49,11 +50,12 @@ const StatTable = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{statistics.averageCosphi}</td>
+                            <td>{statistics.averageCosphi}%</td>
                             <td>{statistics.totalEnergie}</td>
-                            <td>{statistics.totalCost}</td>
+                            <td>{statistics.totalCost !== null ? statistics.totalCost : "N/A"}</td>
                         </tr>
                     </tbody>
+
                 </table>
             )}
         </div>
