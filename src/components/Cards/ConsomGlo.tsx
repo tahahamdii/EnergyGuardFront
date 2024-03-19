@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Icon } from '@mui/material'; // Import the Icon component from Material UI
+import { Icon } from '@mui/material'; 
 
 interface CardDataStatsProps {
   title: string;

@@ -27,7 +27,7 @@ const StatTable = () => {
                 } else {
                     const responseData = await response.json();
                     setStatistics(responseData);
-                    console.log(responseData);
+                  
                 }
             } catch (error) {
                 console.log(error);

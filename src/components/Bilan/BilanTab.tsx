@@ -1,35 +1,46 @@
-import { BRAND } from '../../types/brand';
-import BrandOne from '../../images/brand/brand-01.svg';
-import BrandTwo from '../../images/brand/brand-02.svg';
 
-const brandData: BRAND[] = [
-    {
-        logo: BrandOne,
-        name: 'Google',
-        visitors: 3.5,
-        revenues: '5,768',
-        sales: 590,
-        conversion: 4.8,
-    },
-    {
-        logo: BrandTwo,
-        name: 'Twitter',
-        visitors: 2.2,
-        revenues: '4,635',
-        sales: 467,
-        conversion: 4.3,
-    },
 
-];
+import { Margin } from '@mui/icons-material';
+import React, { useState, useEffect } from 'react';
+
+interface Statistics {
+    averageCosphi: string;
+    totalEnergie: number | null;
+    totalCost: number | null;
+}
 
 const BilanTab = () => {
-    return (
+    const [statistics, setStatistics] = useState<Statistics | null>(null);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const apiurl = 'http://localhost:5000/bilan/getStat';
+                const response = await fetch(apiurl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*', // Allow any origin
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                } else {
+                    const responseData = await response.json();
+                    setStatistics(responseData);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    return (
         <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
             <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
                 Info General
             </h4>
-         
             <div className="flex w-full max-w-900 justify-end">
                 <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4 ml-auto">
                     <button className="rounded bg-white py-1 px-3 text-xs font-medium text-black shadow-card hover:bg-white hover:shadow-card dark:bg-boxdark dark:text-white dark:hover:bg-boxdark">
@@ -49,63 +60,31 @@ const BilanTab = () => {
                     </button>
                 </div>
             </div>
-
-
-
-            <div className="flex flex-col mt-5">
-                <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4"> {/* Adjusted to have only 4 columns */}
-                    <div className="p-2.5 xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Journée
-                        </h5>
+            <div style={{ marginTop: '1.25rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', backgroundColor: '#edf2f7', borderRadius: '0.375rem', padding: '0.75rem', marginBottom: '1.25rem' }}>
+                    <div style={{ padding: '0.75rem' }}>
+                        <h5 style={{ textTransform: 'uppercase', fontSize: '0.875rem', fontWeight: 500 }}>Journée</h5>
                     </div>
-                    <div className="p-2.5 text-center xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Consom Ennergy
-                        </h5>
+                    <div style={{ padding: '0.75rem', textAlign: 'center' }}>
+                        <h5 style={{ textTransform: 'uppercase', fontSize: '0.875rem', fontWeight: 500 }}>Consom Ennergy</h5>
                     </div>
-                    <div className="p-2.5 text-center xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Cosphi
-                        </h5>
+                    <div style={{ padding: '0.75rem', textAlign: 'center' }}>
+                        <h5 style={{ textTransform: 'uppercase', fontSize: '0.875rem', fontWeight: 500 }}>Cosphi</h5>
                     </div>
-                    <div className="p-2.5 text-center xl:p-5">
-                        <h5 className="text-sm font-medium uppercase xsm:text-base">
-                            Cost Energetic
-                        </h5>
+                    <div style={{ padding: '0.75rem', textAlign: 'center' }}>
+                        <h5 style={{ textTransform: 'uppercase', fontSize: '0.875rem', fontWeight: 500 }}>Cost Energetic</h5>
                     </div>
                 </div>
-
-                {brandData.map((brand, key) => (
-                    <div
-                        className={`grid grid-cols-3 sm:grid-cols-4 ${
-                            key === brandData.length - 1
-                                ? ''
-                                : 'border-b border-stroke dark:border-strokedark'
-                            }`}
-                        key={key}
-                    >
-                        <div className="flex items-center gap-3 p-2.5 xl:p-5">
-                            <div className="flex-shrink-0">
-                                <img src={brand.logo} alt="Brand" />
-                            </div>
-                            <p className="hidden text-black dark:text-white sm:block">
-                                {brand.name}
-                            </p>
-                        </div>
-
-                        <div className="flex items-center justify-center p-2.5 xl:p-5">
-                            <p className="text-black dark:text-white">{brand.visitors}K</p>
-                        </div>
-
-                        <div className="flex items-center justify-center p-2.5 xl:p-5">
-                            <p className="text-meta-3">${brand.revenues}</p>
-                        </div>
-                        <div className="flex items-center justify-center p-2.5 xl:p-5">
-                            <p className="text-meta-3">${brand.conversion}</p>
-                        </div>
-                    </div>
-                ))}
+                <table style={{ width: '100%' }}>
+                    <tbody>
+                        <tr>
+                            <td >TOD</td>
+                            <td>{statistics?.totalEnergie ?? "N/A"}</td>
+                            <td>{statistics?.averageCosphi}%</td>
+                            <td>{statistics?.totalCost ?? "N/A"}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     );

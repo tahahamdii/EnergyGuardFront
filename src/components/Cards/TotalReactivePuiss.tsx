@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ConsomGlo from './ConsomGlo';
-import FlashOnIcon from '@mui/icons-material/FlashOn'; // Import the FlashOnIcon
+import FlashOnIcon from '@mui/icons-material/FlashOn';
 
 const TotalReactivePuiss = () => {
     const [overallTotalReactiveEnergy, setOverallTotalReactiveEnergy] = useState<number | null>(null);
@@ -35,7 +35,7 @@ const TotalReactivePuiss = () => {
     return (
         <div>
             <ConsomGlo
-                title="Total Reactive Energy Consumption"
+                title="Reactive Energy Consumption"
                 total={`${overallTotalReactiveEnergy ?? 'Loading...'} kWh`}          
                 rate=""
                 levelUp
