@@ -69,7 +69,7 @@ const ConsomPerUsine = () => {
     };
 
     return (
-        <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-5">
+        <div className="sm:px-7.5 col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-7">
             <div>
                 <h5 className="text-xl font-semibold text-black dark:text-white">
                     Energy Consumption Per Usine
@@ -84,7 +84,7 @@ const ConsomPerUsine = () => {
                     />
                 </div>
             </div>
-            <div className="text-center mb-2">
+            <div className="text-center mb-4">
                 Total consumption: {overallTotalConsumption !== null ? `${overallTotalConsumption} kWh` : 'Loading...'}
             </div>
             <div className="-mx-8 flex items-center justify-center gap-y-3">
