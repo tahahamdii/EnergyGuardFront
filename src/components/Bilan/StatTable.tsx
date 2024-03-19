@@ -42,7 +42,7 @@ const StatTable = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th>Average Cosphi</th>
+                            <th>Average Cosphiii</th>
                             <th>Total Energy Active</th>
                             <th>Total Cost</th>
                         </tr>
