@@ -1,0 +1,24 @@
+.custom-datepicker1 {
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 16px;
+    padding: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .custom-datepicker2 {
+    border: 1px solid #ccc;
+    padding: 8px;
+    margin-left: 15px;
+    font-size: 16px;
+    padding: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .divDate{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+  

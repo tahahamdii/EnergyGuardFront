@@ -1,0 +1,48 @@
+.right-align-card {
+    display: flex;
+    justify-content: flex-end; 
+}
+
+/* predictionConso.css */
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    border: none;
+    margin-top: 20px;
+}
+
+.card h4, .card h2, .card h3 {
+    color: #333;
+    font-weight: bold;
+}
+
+.card-body, .container {
+    padding: 20px;
+}
+
+.weather-icon {
+    width: 50px; /* Adjust the size of the weather icon */
+    height: auto;
+}
+
+.input-control {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+.input-control::placeholder {
+    color: #6c757d;
+}
+
+/* Custom styles for text and numbers */
+.number-data {
+    font-size: 1.2em;
+    color: #017BFE; /* A blue shade for emphasis */
+}
+
+.text-data {
+    font-size: 1em;
+    color: #495057; /* Dark grey */
+}
