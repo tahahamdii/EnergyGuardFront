@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
+import baseUrl from "../../enviroment/enviroment"
 
 const AddMachine = () => {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ const AddMachine = () => {
                 return;
             }
 
-            const response = await fetch('http://localhost:5000/machine/addMachine', {
+            const response = await fetch(`${baseUrl.baseUrl}/machine/addMachine`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

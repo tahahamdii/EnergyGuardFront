@@ -4,6 +4,7 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import baseUrl from "../../enviroment/enviroment"
 
 interface User {
     _id: string;
@@ -23,7 +24,7 @@ const ListUser = () => {
     useEffect(() => {
     const fetchData = async () => {
         try {
-            const apiurl = 'http://localhost:5000/auth/getUsers';
+            const apiurl = `${baseUrl.baseUrl}/auth/getUsers`;
             const response = await fetch(apiurl, {
                 method: 'GET',
                 headers: {

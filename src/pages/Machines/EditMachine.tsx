@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button, TextField } from '@mui/material';
 import DefaultLayout from '../../layout/DefaultLayout';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import baseUrl from "../../enviroment/enviroment"
 
 export interface Machine {
     _id: string;
@@ -25,7 +26,7 @@ const EditMachine = () => {
 
     const fetchMachine = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/machine/getMachineByID/${machineId}`);
+            const response = await fetch(`${baseUrl.baseUrl}/machine/getMachineByID/${machineId}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch machine details');
             }
@@ -48,7 +49,7 @@ const EditMachine = () => {
                 console.error('Machine data not available');
                 return;
             }
-            const response = await fetch(`http://localhost:5000/machine/updateMachine/${machine._id}`, {
+            const response = await fetch(`${baseUrl.baseUrl}/machine/updateMachine/${machine._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

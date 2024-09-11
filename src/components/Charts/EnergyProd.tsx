@@ -3,19 +3,19 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import axios from 'axios';
 import moment from 'moment';
+import baseUrl from "../../enviroment/enviroment"
 
 interface EnergyProdData {
   date: Date;
   energie: number;
   poids: number;
   duree: number;
-  // Add other properties as needed
 }
 
 const prepareHighchartsOptions = (data: EnergyProdData[]) => {
   // Format your data as needed for Highcharts
   const formattedData = data.map(entry => ({
-    name: moment(entry.date).format('YYYY-MM-DD'), // Format date as 'YYYY-MM-DD'
+    name: moment(entry.date).format('YYYY-MM-DD'),
     y: entry.energie,
     color: 'blue',
   }));
@@ -55,7 +55,7 @@ const EnergyProd: React.FC = () => {
 
   useEffect(() => {
     // Fetch data from MongoDB API
-    axios.get('http://localhost:5000/energyProd/getEnergyProd')
+    axios.get(`${baseUrl.baseUrl}/energyProd/getEnergyProd`)
       .then(response => {
         setChartData(response.data as EnergyProdData[]);
         setLoading(false);

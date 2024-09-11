@@ -4,6 +4,8 @@ import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
 import LogoIcon from '../../images/logo/logo-icon.svg';
 import DarkModeSwitcher from './DarkModeSwitcher';
+import NotifEvent from './NotifEvent';
+import Shipment from './Shipment';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -74,9 +76,11 @@ const Header = (props: {
             {/* <!-- Dark Mode Toggler --> */}
             <DarkModeSwitcher />
             {/* <!-- Dark Mode Toggler --> */}
-
+            <Shipment />
             {/* <!-- Notification Menu Area --> */}
             <DropdownNotification />
+          
+
             {/* <!-- Notification Menu Area --> */}
 
             {/* <!-- Chat Notification Area --> */}

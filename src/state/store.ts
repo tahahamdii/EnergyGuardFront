@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import ActivityReducer from "./Activity/ActivitySlice";
+import ActivityReducer from "./Slices/ActivitySlice";
+import ToastReducer from "./Slices/ToastSlice";
 
 export const store = configureStore({
   reducer: {
-    Activity:ActivityReducer
+    Activity:ActivityReducer,
+    Toast:ToastReducer
   },
 });
 

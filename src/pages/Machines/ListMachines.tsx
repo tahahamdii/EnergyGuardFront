@@ -4,6 +4,7 @@ import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../../layout/DefaultLayout';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import baseUrl from "../../enviroment/enviroment"
 
 interface Machine {
     _id: string;
@@ -19,7 +20,7 @@ const ListMachines = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const apiurl = 'http://localhost:5000/machine/getMachine';
+                const apiurl = `${baseUrl.baseUrl}/machine/getMachine`;
                 const response = await fetch(apiurl, {
                     method: 'GET',
                     headers: {
@@ -42,7 +43,7 @@ const ListMachines = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            const response = await fetch(`http://localhost:5000/machine/deleteMachine/${id}`, {
+            const response = await fetch(`${baseUrl.baseUrl}/machine/deleteMachine/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

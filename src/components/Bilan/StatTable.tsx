@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
+import baseUrl from "../../enviroment/enviroment"
+import baseUrlVagrant from "../../enviroment/enviroment"
 interface Statistics {
     averageCosphi: string; // Change data type to string
     totalEnergie: number | null;
@@ -14,7 +15,7 @@ const StatTable = () => {
 
         const fetchData = async () => {
             try {
-                const apiurl = 'http://localhost:5000/bilan/getStat';
+                const apiurl = `${baseUrl.baseUrl}/bilan/getStat/daily/19-04-2024/18-04-2024`;
                 const response = await fetch(apiurl, {
                     method: 'GET',
                     headers: {

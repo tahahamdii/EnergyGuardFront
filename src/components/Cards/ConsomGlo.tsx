@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Icon } from '@mui/material'; 
+import { Icon } from '@mui/material';
 
 interface CardDataStatsProps {
   title: string;
@@ -7,9 +7,9 @@ interface CardDataStatsProps {
   rate: string;
   levelUp?: boolean;
   levelDown?: boolean;
-  icon?: ReactNode; // Add icon prop
-
-
+  icon?: ReactNode;
+  backgroundImage?: string;
+  children?: ReactNode;
 }
 
 const ConsomGlo: React.FC<CardDataStatsProps> = ({
@@ -19,14 +19,21 @@ const ConsomGlo: React.FC<CardDataStatsProps> = ({
   levelUp,
   levelDown,
   icon,
+  backgroundImage,
+  children,
 }) => {
   return (
-    <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-  <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
-  {icon && <Icon>{icon}</Icon>}
+    <div
+      style={{
+        backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover',
+      }}
+      className="sm:px-4 col-span-12 sm:col-span-6 rounded-4 border border-stroke bg-white px-3 py-3 shadow-default dark:border-strokedark dark:bg-boxdark"
+    >
+      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-transparent dark:bg-meta-4">
+        {icon && <Icon style={{ marginTop: '-0.25rem' }}>{icon}</Icon>}
       </div>
 
-      <div className="mt-4 flex items-end justify-between">
+      <div className="mt-3  flex items-end justify-between">
         <div>
           <h4 className="text-title-md font-bold text-black dark:text-white">
             {total}
@@ -35,9 +42,8 @@ const ConsomGlo: React.FC<CardDataStatsProps> = ({
         </div>
 
         <span
-          className={`flex items-center gap-1 text-sm font-medium ${
-            levelUp && 'text-meta-3'
-          } ${levelDown && 'text-meta-5'} `}
+          className={`flex items-center gap-1 text-sm font-medium ${levelUp && 'text-meta-3'
+            } ${levelDown && 'text-meta-5'}`}
         >
           {rate}
 
@@ -72,6 +78,7 @@ const ConsomGlo: React.FC<CardDataStatsProps> = ({
             </svg>
           )}
         </span>
+        {children}
       </div>
     </div>
   );
