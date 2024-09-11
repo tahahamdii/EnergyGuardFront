@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ConsomGlo from './ConsomGlo';
-import FlashOnIcon from '@mui/icons-material/FlashOn';
+import PowerSettingsNewOutlinedIcon from '@mui/icons-material/PowerSettingsNewOutlined';
+import back from '../../images/logo/Cap2.jpg';
+import baseUrl from "../../enviroment/enviroment"
 
 const TotalReactivePuiss = () => {
     const [overallTotalReactiveEnergy, setOverallTotalReactiveEnergy] = useState<number | null>(null);
@@ -8,7 +10,7 @@ const TotalReactivePuiss = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const apiurl = 'http://localhost:5000/energieUsine/calculateOverallTotalReactiveEnergy';
+                const apiurl = `${baseUrl.baseUrl}/energieUsine/calculateOverallTotalReactiveEnergy`;
                 const response = await fetch(apiurl, {
                     method: 'GET',
                     headers: {
@@ -20,9 +22,9 @@ const TotalReactivePuiss = () => {
                     throw new Error('something is wrong');
                 } else {
                     const responseData = await response.json();
-                    console.log(responseData); 
+                    // Store the fetched data in localStorage
+                    localStorage.setItem('overallTotalReactiveEnergy', JSON.stringify(responseData.overallTotalReactiveEnergy));
                     setOverallTotalReactiveEnergy(responseData.overallTotalReactiveEnergy);
-                    console.log(responseData.overallTotalReactiveEnergy);
                 }
             } catch (error) {
                 console.log(error);
@@ -31,19 +33,17 @@ const TotalReactivePuiss = () => {
         fetchData();
     }, []);
 
-
     return (
         <div>
             <ConsomGlo
-                title="Reactive Energy Consumption"
-                total={`${overallTotalReactiveEnergy ?? 'Loading...'} kWh`}          
+                title={<span style={{ color: 'white' }}>{"Reactive Energy Consumption"}</span>}
+                total={<span style={{ color: 'white' }}>{`${overallTotalReactiveEnergy ?? 'Loading...'} kWh`}</span>}
                 rate=""
                 levelUp
-                icon={<FlashOnIcon  className="text-blue-500 mr-3"/>} 
-            />
+                icon={<PowerSettingsNewOutlinedIcon className="text-white-500 mr-3" />}
+                backgroundImage={back} />
         </div>
     );
-    
 };
 
 export default TotalReactivePuiss;

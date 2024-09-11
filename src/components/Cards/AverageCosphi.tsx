@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import ConsomGlo from './ConsomGlo';
-import FlashOnIcon from '@mui/icons-material/FlashOn'; // Import the FlashOnIcon
+import CableOutlinedIcon from '@mui/icons-material/CableOutlined';
+import back from '../../images/logo/Cap3.jpg'
+import baseUrl from "../../enviroment/enviroment"
+
 
 const AverageCosphi = () => {
     const [overallTotalCosphi, setOverallTotalCosphi] = useState<number | null>(null);
@@ -9,7 +11,7 @@ const AverageCosphi = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const apiurl = 'http://localhost:5000/energieUsine/calculateOverallTotalCosphi';
+                const apiurl = `${baseUrl.baseUrl}/energieUsine/calculateOverallTotalCosphi`;
                 const response = await fetch(apiurl, {
                     method: 'GET',
                     headers: {
@@ -30,18 +32,16 @@ const AverageCosphi = () => {
         fetchData();
     }, []);
 
-
-
     return (
         <div>
             <ConsomGlo
-            
               title="Average Cosphi "
               total={`${overallTotalCosphi ?? 'Loading...'} kWh`}
               rate=""
               levelUp
-              icon={<FlashOnIcon />} 
-            />
+              icon={<CableOutlinedIcon />}
+              backgroundImage={back} />
+            
         </div>
     );
 };

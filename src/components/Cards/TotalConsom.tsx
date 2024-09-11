@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ConsomGlo from './ConsomGlo';
-import FlashOnIcon from '@mui/icons-material/FlashOn'; 
+import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
+import back from '../../images/logo/Card.PNG.jpg';
+import baseUrl from "../../enviroment/enviroment"
 
 const TotalConsom = () => {
     const [overallTotalConsumption, setOverallTotalConsumption] = useState<number | null>(null);
@@ -8,7 +10,7 @@ const TotalConsom = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const apiurl = 'http://localhost:5000/energieUsine/calculateOverallTotalConsumption';
+                const apiurl = `${baseUrl.baseUrl}/energieUsine/calculateOverallTotalConsumption`;
                 const response = await fetch(apiurl, {
                     method: 'GET',
                     headers: {
@@ -29,17 +31,15 @@ const TotalConsom = () => {
         fetchData();
     }, []);
 
-
     return (
-        <div>
+        <div style={{ color: 'white' }}>
             <ConsomGlo
-            
-              title="Total Energy Consumption"
-              total={`${overallTotalConsumption ?? 'Loading...'} kWh`}
-              rate=""
-              levelUp
-              icon={<FlashOnIcon  className="text-yellow-500 mr-3"/>} 
-            />
+                title={<span style={{ color: 'teal' , fontWeight: 'bold' }}>{"Total Energy Consumption"}</span>}
+                total={<span style={{ color: 'white' }}>{`${overallTotalConsumption ?? 'Loading...'} kWh`}</span>}
+                rate=""
+                levelUp
+                icon={<BatteryChargingFullIcon className="text-white-500 mr-3" />}
+                backgroundImage={back} />
         </div>
     );
 };
